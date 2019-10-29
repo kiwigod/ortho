@@ -2,7 +2,7 @@ import _io
 import numpy as np
 import itertools
 from exceptions import *
-from model.meta import Meta
+from model.meta import Meta, Filter
 from configuration import Configuration as C
 
 
@@ -61,4 +61,21 @@ class Statistics:
     def calculate_combinations(self) -> list:
         combination = C.get("exercise_combinations")
         if not combination:
-            raise ExerciseCombinationNotSet("No exercise combination is set in your configuration file")
+            raise ExerciseCombinationNotSetError("No exercise combination is set in your configuration file")
+
+        exercises = {}
+        for c in combination:
+            _exercises = [f for f in self.exercises if f.meta.ex == c]
+
+            if len(_exercises) < 1:
+                raise NotAllExpectedExercisesPerformedError("Patient %i in category %i "
+                                                            "has not performed %s" %
+                                                            (self.exercises[0].meta.pat, self.exercises[0].meta.cat, c))
+
+            exercises[c] = _exercises
+
+        # print(self.exercises[0].meta.cat, self.exercises[0].meta.pat)
+        # [print(x, len(y)) for x, y in exercises.items()]
+        # print(len(list(itertools.product(*exercises.values()))))
+
+        return list(itertools.product(*exercises.values()))
