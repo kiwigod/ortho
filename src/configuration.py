@@ -3,7 +3,7 @@ import traceback
 
 
 class Configuration:
-    config = None
+    config: dict = None
 
     @staticmethod
     def setup(path):

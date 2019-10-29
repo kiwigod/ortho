@@ -18,4 +18,7 @@ class File:
             return callback(f, self.meta)
 
     def __str__(self):
-        return self.path
+        return "Path: %s\n\n"\
+               "Meta\n"\
+               "----\n"\
+               "%s" % (self.path, self.meta.__str__())

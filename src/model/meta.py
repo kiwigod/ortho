@@ -16,3 +16,25 @@ class Meta:
 
     def __parse_exercise(self, text: str):
         return str(re.findall(r'/(\w+)\d.csv', text, re.IGNORECASE)[0])
+
+    def __str__(self):
+        return "category: %i\n"\
+               "patient:  %i\n"\
+               "exercise: %s" % (self.cat, self.pat, self.ex)
+
+
+class Filter:
+    def __init__(self, **kwargs):
+        self.cat = kwargs.get('cat')
+        self.pat = kwargs.get('pat')
+        self.ex = kwargs.get('ex')
+        self.compiled = []
+
+    def compile(self):
+        self.compiled = []
+        if self.cat is not None:
+            self.compiled.append(lambda f: f.meta.cat == self.cat)
+        if self.pat is not None:
+            self.compiled.append(lambda f: f.meta.pat == self.pat)
+        if self.ex is not None:
+            self.compiled.append(lambda f: f.meta.ex == self.ex)
