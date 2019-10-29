@@ -1,3 +1,4 @@
+import numpy as np
 from time import time
 from sys import argv
 from fd.dir import Dir
@@ -37,7 +38,6 @@ if __name__ == '__main__':
                 exercises[key] = [f.exec(Exercise)]
             else:
                 exercises[key].append(f.exec(Exercise))
-    print(exercises)
     print("Parsing data took %f seconds" % (time()-_start))
 
     """Reduce data points"""
@@ -48,6 +48,16 @@ if __name__ == '__main__':
         except NotAllExpectedExercisesPerformedError:
             print("%s has not performed all exercises; Skipping" % cat_pat)
             continue
+
+        res = list()
+        # TODO: save indicators
+        for c in combinations:
+            _tmp = []
+            [_tmp.extend(ex.reduced) for ex in c]
+            if len(_tmp) != 650:
+                print("fml")
+            res.append(_tmp)
+    print('yeet')
 
     """Train model"""
 

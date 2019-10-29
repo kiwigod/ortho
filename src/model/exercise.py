@@ -1,4 +1,5 @@
 import _io
+import math
 import numpy as np
 import itertools
 from exceptions import *
@@ -13,6 +14,7 @@ class Exercise:
         :param Meta meta: Meta object associated with the exercise
         """
         self.nd: np.ndarray = self.__read_csv_numpy(csv)
+        self.reduced = self.reduce_data(False)
         self.meta: Meta = meta
 
     def __read_csv_numpy(self, csv) -> np.ndarray:
@@ -34,15 +36,17 @@ class Exercise:
         :param bool with_indicator: return a list with true values
             alongside the requested points
         :return: data which can be used to train the model
-        :rtype: np.ndarray|tupel
+        :rtype: np.ndarray|tuple
         """
         points = C.get("data_points")
-        interval = int(len(self.nd) / points)
-        data = np.ndarray(shape=(points, self.nd.shape[1]))
-        [np.append(data, self.nd[i]) for i in range(0, len(self.nd), interval)]
-        if with_indicator:
-            indicator = [self.meta.cat] * points
-            return data, indicator
+        interval = math.ceil(len(self.nd) / points)
+        # data = np.ndarray(shape=(points, self.nd.shape[1]))
+        data = list()
+        [data.extend(self.nd[i]) for i in range(0, len(self.nd), interval)]
+        # [np.append(data, self.nd[i]) for i in range(0, len(self.nd), interval)]
+        # if with_indicator:
+        #     indicator = [self.meta.cat] * points
+        #     return data, indicator
         return data
 
     def __str__(self) -> str:
@@ -78,4 +82,5 @@ class Statistics:
         # [print(x, len(y)) for x, y in exercises.items()]
         # print(len(list(itertools.product(*exercises.values()))))
 
+        return list(itertools.product(*[exercises[c] for c in combination]))
         return list(itertools.product(*exercises.values()))

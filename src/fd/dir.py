@@ -4,7 +4,7 @@ from fd.file import File
 
 class Dir:
     """
-
+    Handle a directory's contents
     """
     def __init__(self, rel_path: str):
         """
@@ -26,18 +26,17 @@ class Dir:
             return all_files
 
         all_files.extend(self.files)
-        for d in self.dirs:
-            all_files = d.get_files_recursively(all_files)
+        [d.get_files_recursively(all_files) for d in self.dirs]
 
         return all_files
 
-    def __resolve_path(self, check, instance):
+    def __resolve_path(self, check, instance) -> list:
         """
         Resolve the contents of the given path
 
         :param callable check: Filter for which files to add
         :param callable instance: What instance must be created
-        :return:
+        :return: list of instances
         """
         tmp = list()
         for f in os.listdir(self.path):
