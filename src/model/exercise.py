@@ -3,7 +3,7 @@ import math
 import numpy as np
 import itertools
 from exceptions import *
-from model.meta import Meta, Filter
+from model.meta import Meta
 from configuration import Configuration as C
 
 
@@ -14,7 +14,7 @@ class Exercise:
         :param Meta meta: Meta object associated with the exercise
         """
         self.nd: np.ndarray = self.__read_csv_numpy(csv)
-        self.reduced = self.reduce_data(False)
+        self.reduced = self.reduce_data()
         self.meta: Meta = meta
 
     def __read_csv_numpy(self, csv) -> np.ndarray:
@@ -29,24 +29,19 @@ class Exercise:
         nd = np.delete(nd, [13, 14, 28, 29], axis=1)  # delete columns which are always 0
         return nd
 
-    def reduce_data(self, with_indicator: bool):
+    def reduce_data(self):
         """
         Reduce the data to the number of specified points
 
-        :param bool with_indicator: return a list with true values
-            alongside the requested points
         :return: data which can be used to train the model
         :rtype: np.ndarray|tuple
         """
         points = C.get("data_points")
         interval = math.ceil(len(self.nd) / points)
-        # data = np.ndarray(shape=(points, self.nd.shape[1]))
         data = list()
+
         [data.extend(self.nd[i]) for i in range(0, len(self.nd), interval)]
-        # [np.append(data, self.nd[i]) for i in range(0, len(self.nd), interval)]
-        # if with_indicator:
-        #     indicator = [self.meta.cat] * points
-        #     return data, indicator
+
         return data
 
     def __str__(self) -> str:
