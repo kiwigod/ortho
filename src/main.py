@@ -2,7 +2,7 @@ import numpy as np
 from time import time
 from sys import argv
 from fd.dir import Dir
-from exceptions import *
+from exceptions import NotAllExpectedExercisesPerformedError
 from configuration import Configuration as C
 from model.exercise import Exercise, Statistics
 from model.meta import Filter
@@ -41,7 +41,8 @@ if __name__ == '__main__':
     print("Parsing data took %f seconds" % (time()-_start))
 
     """Reduce data points"""
-    res = list()
+    data = list()
+    indicator = list()
     for cat_pat, e in exercises.items():
         s = Statistics(e)
         try:
@@ -50,14 +51,13 @@ if __name__ == '__main__':
             print("%s has not performed all expected exercises; Skipping" % cat_pat)
             continue
 
-        # TODO: save indicators
         for c in combinations:
             _tmp = []
             [_tmp.extend(ex.reduced) for ex in c]
-            if len(_tmp) != 650:
-                print("fml")
-            res.append(_tmp)
-    print(len(res))
+            data.append(_tmp)
+            indicator.append(c[0].meta.cat)
+    print(len(data))
+    print(len(indicator))
 
     """Train model"""
 
