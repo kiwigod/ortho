@@ -6,6 +6,7 @@ from exceptions import NotAllExpectedExercisesPerformedError
 from configuration import Configuration as C
 from model.exercise import Exercise, Statistics
 from model.meta import Filter
+from ml.linear.logistic import LogisticRegression
 
 
 def filter_files(filter: Filter, files: [Exercise]):
@@ -60,7 +61,8 @@ if __name__ == '__main__':
     print(len(indicator))
 
     """Train model"""
-
+    model = LogisticRegression(solver="lbfgs", multi_class="auto", max_iter=2000, n_jobs=-1, verbose=1)
+    model.train(data, indicator)
 
     """Assert functionality"""
 
