@@ -8,6 +8,10 @@ from model.exercise import Exercise, Statistics
 from ml.linear.logistic import LogisticRegression
 
 
+def ex():
+    exit()
+
+
 if __name__ == '__main__':
     """Create configuration"""
     try:
