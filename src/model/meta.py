@@ -12,7 +12,6 @@ class Meta:
 
     def __parse_pat(self, text: str):
         return int(re.findall(r'/(\d+)/', text, re.IGNORECASE)[0])
-        pass
 
     def __parse_exercise(self, text: str):
         return str(re.findall(r'/(\w+)\d.csv', text, re.IGNORECASE)[0])

@@ -63,6 +63,10 @@ class Statistics:
         self.exercises = exercises
 
     def calculate_combinations(self) -> list:
+        """
+        Generate exercise combinations
+        :return: list of exercise combinations
+        """
         combination = C.get("exercise_combinations")
         if not combination:
             raise ExerciseCombinationNotSetError("No exercise combination is set in your configuration file")
@@ -82,5 +86,5 @@ class Statistics:
         # [print(x, len(y)) for x, y in exercises.items()]
         # print(len(list(itertools.product(*exercises.values()))))
 
-        return list(itertools.product(*[exercises[c] for c in combination]))
+        # return list(itertools.product(*[exercises[c] for c in combination]))
         return list(itertools.product(*exercises.values()))

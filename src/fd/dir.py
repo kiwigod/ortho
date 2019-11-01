@@ -19,7 +19,7 @@ class Dir:
         Retrieve all files from the parent and child directories
 
         :param list all_files: iterable; write the results
-        :return:
+        :return: list of files from the current directory
         """
         if len(self.dirs) < 1:
             all_files.extend(self.files)
@@ -51,16 +51,16 @@ class Dir:
         _dirs = [x.path for x in self.dirs]
         _files = [x.path for x in self.files]
 
-        if len(_dirs) > 1:
+        if len(_dirs) > 0:
             res += "Directories\n"\
                    "-----------\n"
             for x in _dirs:
                 res += x + "\n"
+            res += "\n"
 
-        if len(_files) > 1:
+        if len(_files) > 0:
             res += "Files\n"\
                    "-----\n"
-
             for x in _files:
                 res += x + "\n"
 

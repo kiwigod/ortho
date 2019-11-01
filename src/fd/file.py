@@ -11,7 +11,7 @@ class File:
         Keep file access in one location.
         Defeats the purpose of opening files in unexpected locations
 
-        :param function callback:
+        :param callable callback:
         :return: return value of the callback
         """
         with open(self.path) as f:
