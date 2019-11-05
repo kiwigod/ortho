@@ -84,7 +84,7 @@ if __name__ == '__main__':
     print(len(indicator), len(test_indicator))
 
     """Train model"""
-    model = LogisticRegression(solver="lbfgs", multi_class="auto", max_iter=2000, n_jobs=-1, verbose=1)
+    model = LogisticRegression(solver="lbfgs", multi_class="ovr", max_iter=2000, n_jobs=-1, verbose=1, class_weight='balanced')
     model.train(data, indicator)
 
     """Assert functionality"""

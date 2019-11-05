@@ -34,7 +34,6 @@ class Configuration:
 
         :param str key: String of the key to retrieve from the config file
         :returns: Value of the requested key
-        :rtype: mixed
         """
         try:
             Configuration.config[key]

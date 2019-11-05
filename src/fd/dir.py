@@ -14,12 +14,13 @@ class Dir:
         self.dirs: [Dir] = self.__resolve_path(os.path.isdir, Dir)
         self.files: [File] = self.__resolve_path(lambda x: os.path.isfile(x) and x.endswith(".csv"), File)
 
-    def get_files_recursively(self, all_files):
+    def get_files_recursively(self, all_files) -> list:
         """
         Retrieve all files from the parent and child directories
 
         :param list all_files: iterable; write the results
         :return: list of files from the current directory
+        :rtype: list
         """
         if len(self.dirs) < 1:
             all_files.extend(self.files)
