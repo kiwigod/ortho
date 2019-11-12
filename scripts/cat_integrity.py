@@ -69,7 +69,7 @@ def walk_dir(dir: str, ext: str) -> list:
 
 
 if len(argv) < 3:
-    print("Usage: %s <conv dir> <raw dir>")
+    print("Usage: %s <conv dir> <raw dir>" % argv[0])
     exit(0)
 
 conv = walk_dir(argv[1], '.csv')
